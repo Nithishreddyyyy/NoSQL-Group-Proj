@@ -1,36 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Faculty</title>
+  <meta charset="utf-8" />
+  <title>Faculty Management</title>
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-<h2>Add Faculty</h2>
 
-<form method="post" action="/faculty/create">
-    <input name="name" placeholder="Name" required><br>
-    <input name="department" placeholder="Department" required><br>
-    <input name="designation" placeholder="Designation" required><br>
-    <input name="contact" placeholder="Contact" required><br>
-    <input name="qualifications" placeholder="Qualifications"><br>
-    <input name="experience" type="number" placeholder="Experience"><br>
-    <input name="doj" type="date" required><br>
-    <button type="submit">Add</button>
-</form>
+<h1 class="fm">Faculty Management</h1>
 
-<h2>All Faculty</h2>
-<table border="1">
-    <tr>
-        <th>Name</th><th>Dept</th><th>Desig</th><th>Actions</th>
-    </tr>
-    {% for f in faculty %}
-    <tr>
+<div class="box">
+  <h2>Add Faculty</h2>
+
+  <form action="/faculty/create" method="post">
+    <input name="name" placeholder="Full Name" required>
+    <input name="department" placeholder="Department" required>
+    <input name="designation" placeholder="Designation" required>
+    <input name="contact" placeholder="Contact details">
+    <input name="qualifications" placeholder="Qualifications">
+    <input name="experience" type="number" placeholder="Experience (years)">
+    <input name="doj" type="date" placeholder="Date of Joining" required>
+
+    <button type="submit">Save</button>
+  </form>
+</div>
+
+<div class="box">
+  <h2>All Faculty</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>DOJ</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for f in faculty %}
+      <tr>
         <td>{{ f.name }}</td>
         <td>{{ f.department }}</td>
         <td>{{ f.designation }}</td>
-        <td><a href="/faculty/delete/{{ f.id }}">Delete</a></td>
-    </tr>
-    {% endfor %}
-</table>
+        <td>{{ f.doj }}</td>
+        <td>
+          <a href="/faculty/delete/{{ f.id }}" class="btn-secondary">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
 </body>
 </html>
