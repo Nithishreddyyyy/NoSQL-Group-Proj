@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty</title>
+</head>
+<body>
+<h2>Add Faculty</h2>
+
+<form method="post" action="/faculty/create">
+    <input name="name" placeholder="Name" required><br>
+    <input name="department" placeholder="Department" required><br>
+    <input name="designation" placeholder="Designation" required><br>
+    <input name="contact" placeholder="Contact" required><br>
+    <input name="qualifications" placeholder="Qualifications"><br>
+    <input name="experience" type="number" placeholder="Experience"><br>
+    <input name="doj" type="date" required><br>
+    <button type="submit">Add</button>
+</form>
+
+<h2>All Faculty</h2>
+<table border="1">
+    <tr>
+        <th>Name</th><th>Dept</th><th>Desig</th><th>Actions</th>
+    </tr>
+    {% for f in faculty %}
+    <tr>
+        <td>{{ f.name }}</td>
+        <td>{{ f.department }}</td>
+        <td>{{ f.designation }}</td>
+        <td><a href="/faculty/delete/{{ f.id }}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

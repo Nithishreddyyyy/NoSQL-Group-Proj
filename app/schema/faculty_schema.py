@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import date
 
-class FacultyApp(BaseModel):
+class FacultyCreate(BaseModel):
     name: str
     department : str
     designation : str

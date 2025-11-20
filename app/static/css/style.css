@@ -1,0 +1,11 @@
+body {
+    margin: 20px;
+    font-family: Arial;
+}
+input, button {
+    padding: 5px;
+    margin: 5px;
+}
+table {
+    margin-top: 20px;
+}
