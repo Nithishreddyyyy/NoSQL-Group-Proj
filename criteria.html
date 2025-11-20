@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Appraisal Categories & Criteria</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Appraisal Categories & Criteria</h1>
+
+  <div class="box">
+    <h2>Add Category / Criterion</h2>
+    <input id="cat_name" placeholder="Category">
+    <input id="crit_name" placeholder="Criterion name">
+    <input id="crit_weight" type="number" placeholder="Weight (%)">
+    <button onclick="addCriterion()">Add Criterion</button>
+  </div>
+
+  <div class="box">
+    <h2>Categories & Criteria (grouped)</h2>
+    <div id="categoriesContainer"></div>
+  </div>
+
+  <div class="box" id="critEditBox" style="display:none;">
+    <h2>Edit Criterion</h2>
+    <input id="edit_cat" placeholder="Category">
+    <input id="edit_name" placeholder="Criterion name">
+    <input id="edit_weight" type="number" placeholder="Weight (%)">
+    <label><input id="edit_active" type="checkbox"> Active</label>
+    <div class="row">
+      <button onclick="saveEditedCriterion()">Save</button>
+      <button onclick="closeCritEdit()" class="btn-secondary">Cancel</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

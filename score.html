@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Score Calculation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Scoring & Appraisal Calculation</h1>
+
+  <div class="box">
+    <h2>Calculate Score for Faculty</h2>
+    <select id="score_faculty"></select>
+    <button onclick="calcScore()">Calculate (backend)</button>
+    <button onclick="recalcAll()" class="btn-secondary">Recalculate All</button>
+  </div>
+
+  <div class="box">
+    <h2>Last Calculated Scores</h2>
+    <div id="scoresList"></div>
+  </div>
+
+  <div class="box" id="scoreDetailBox" style="display:none;">
+    <h2>Score Breakdown</h2>
+    <div id="scoreDetail"></div>
+    <div class="row"><button onclick="closeScoreDetail()">Close</button></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

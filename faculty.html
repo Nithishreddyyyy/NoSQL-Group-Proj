@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Faculty Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 class="fm">Faculty Management</h1>
+
+  <div class="box">
+    <h2 id="fm-title">Add Faculty</h2>
+    <input id="f_name" placeholder="Full name">
+    <input id="f_dept" placeholder="Department">
+    <input id="f_designation" placeholder="Designation">
+    <input id="f_contact" placeholder="Contact details (email/phone)">
+    <input id="f_qualifications" placeholder="Qualifications">
+    <input id="f_experience" placeholder="Experience (years)">
+    <input id="f_doj" placeholder="Date of Joining (YYYY-MM-DD)">
+    <div class="row">
+      <button id="f_save" onclick="saveFaculty()">Save</button>
+      <button id="f_cancel" onclick="resetFacultyForm()" class="btn-secondary">Cancel</button>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2>All Faculty</h2>
+    <input id="f_search" placeholder="Search by name or dept" oninput="loadFaculty()">
+    <table id="facultyTable">
+      <thead>
+        <tr><th>Name</th><th>Department</th><th>Designation</th><th>DOJ</th><th>Action</th></tr>
+      </thead>
+      <tbody id="facultyList"></tbody>
+    </table>
+  </div>
+
+  <div class="box" id="facultyProfileBox" style="display:none;">
+    <h2>Faculty Profile</h2>
+    <div id="facultyProfile"></div>
+    <div class="row">
+      <button onclick="document.getElementById('facultyProfileBox').style.display='none'">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
