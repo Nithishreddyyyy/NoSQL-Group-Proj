@@ -1,6 +1,10 @@
+import os
 from motor.motor_asyncio import AsyncIOMotorClient
 
-client = AsyncIOMotorClient("mongodb://localhost:27017")
+MONGO_URI = "mongodb+srv://root:test1234@database.ohejniv.mongodb.net/?appName=database"
+
+client = AsyncIOMotorClient(MONGO_URI)
+
 db = client["faculty_appraisal"]
 
 faculty_collection = db["faculty"]
