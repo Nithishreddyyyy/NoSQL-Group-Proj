@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
+from typing import List
 
 class FacultyApp(BaseModel):
     name: str
@@ -9,3 +10,4 @@ class FacultyApp(BaseModel):
     qualifications:str
     experience:int
     doj : date
+    categories: List[str]
