@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty Appraisal Scores</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .criteria-container {
+            margin: 5px 0;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .criteria-item {
+            margin: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f9f9f9;
+            padding: 4px 6px;
+            border-radius: 2px;
+            font-size: 0.85em;
+        }
+        .criteria-count {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 50%;
+            min-width: 22px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+        .criteria-item button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 2px 5px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.75em;
+        }
+        .criteria-item button:hover {
+            background-color: #c82333;
+        }
+        .add-criteria-section {
+            margin: 5px 0;
+            display: flex;
+            gap: 5px;
+        }
+        .add-criteria-section select {
+            flex: 1;
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            font-size: 0.85em;
+        }
+        .add-criteria-section button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.8em;
+            white-space: nowrap;
+        }
+        .add-criteria-section button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+        th, td {
+            padding: 6px 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Faculty Appraisal Scores</h1>
+    <div class="box">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Selected Criteria</th>
+                    <th>Total Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for faculty in scores %}
+                <tr>
+                    <td>{{ faculty.name }}</td>
+                    <td>{{ faculty.department }}</td>
+                    <td>
+                        <form method="post" action="/scores/update/{{ faculty.id }}" id="form-{{ faculty.id }}">
+                            <div class="criteria-container" id="criteria-list-{{ faculty.id }}">
+                                {% set criteria_counts = {} %}
+                                {% for criterion_name in faculty.selected_criteria %}
+                                    {% if criterion_name in criteria_counts %}
+                                        {% set _ = criteria_counts.update({criterion_name: criteria_counts[criterion_name] + 1}) %}
+                                    {% else %}
+                                        {% set _ = criteria_counts.update({criterion_name: 1}) %}
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                {% for criterion_name, count in criteria_counts.items() %}
+                                <div class="criteria-item" data-criterion="{{ criterion_name }}">
+                                    {% for i in range(count) %}
+                                    <input type="hidden" name="criteria" value="{{ criterion_name }}">
+                                    {% endfor %}
+                                    <span>{{ criterion_name }}</span>
+                                    <span class="criteria-count" data-count="{{ count }}">{{ count }}</span>
+                                    <button type="button" onclick="removeCriteria(event, '{{ faculty.id }}', '{{ criterion_name }}')">×</button>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="add-criteria-section">
+                                <select id="criteria-select-{{ faculty.id }}">
+                                    <option value="">Add...</option>
+                                    {% for criterion in all_criteria %}
+                                    <option value="{{ criterion.name }}">{{ criterion.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="button" onclick="addCriteria(event, '{{ faculty.id }}')">+</button>
+                                <button type="submit">Save</button>
+                            </div>
+                        </form>
+                    </td>
+                    <td>{{ "%.2f" | format(faculty.total_score) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="/">Back to Home</a>
+
+    <script>
+        function addCriteria(event, facultyId) {
+            event.preventDefault();
+            const select = document.getElementById(`criteria-select-${facultyId}`);
+            const criteriaList = document.getElementById(`criteria-list-${facultyId}`);
+            const value = select.value;
+
+            if (!value) {
+                alert('Please select a criterion');
+                return;
+            }
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'criteria';
+            input.value = value;
+            
+            const existingItem = criteriaList.querySelector(`[data-criterion="${value}"]`);
+            if (existingItem) {
+                existingItem.appendChild(input);
+                const countSpan = existingItem.querySelector('[data-count]');
+                const newCount = parseInt(countSpan.getAttribute('data-count')) + 1;
+                countSpan.setAttribute('data-count', newCount);
+                countSpan.textContent = newCount;
+            } else {
+                const div = document.createElement('div');
+                div.className = 'criteria-item';
+                div.setAttribute('data-criterion', value);
+                div.innerHTML = `
+                    <span>${value}</span>
+                    <span class="criteria-count" data-count="1">1</span>
+                    <button type="button" onclick="removeCriteria(event, '${facultyId}', '${value}')">×</button>
+                `;
+                div.appendChild(input);
+                criteriaList.appendChild(div);
+            }
+
+            select.value = '';
+        }
+
+        function removeCriteria(event, facultyId, criterionName) {
+            event.preventDefault();
+            const criteriaList = document.getElementById(`criteria-list-${facultyId}`);
+            const criteriaItem = criteriaList.querySelector(`[data-criterion="${criterionName}"]`);
+            
+            if (criteriaItem) {
+                const hiddenInputs = criteriaItem.querySelectorAll(`input[value="${criterionName}"]`);
+                
+                if (hiddenInputs.length > 1) {
+                    hiddenInputs[0].remove();
+                    const countSpan = criteriaItem.querySelector('[data-count]');
+                    const newCount = parseInt(countSpan.getAttribute('data-count')) - 1;
+                    countSpan.setAttribute('data-count', newCount);
+                    countSpan.textContent = newCount;
+                } else if (hiddenInputs.length === 1) {
+                    criteriaItem.remove();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

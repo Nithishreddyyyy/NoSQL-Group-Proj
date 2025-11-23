@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request,Form
 from fastapi.responses import HTMLResponse , RedirectResponse
 from fastapi.templating import Jinja2Templates
+from typing import List
 
 from app.config.database import faculty_collection
 from app.schema.faculty_schema import FacultyCreate
@@ -22,7 +23,8 @@ async def create_faculty_route(
     contact: str = Form(...),
     qualifications: str = Form(...),
     experience: int = Form(...),
-    doj: str = Form(...)
+    doj: str = Form(...),
+    categories: List[str] = Form([])
 ):
     faculty_data = {
         "name": name,
@@ -31,7 +33,8 @@ async def create_faculty_route(
         "contact": contact,
         "qualifications": qualifications,
         "experience": experience,
-        "doj": doj
+        "doj": doj,
+        "categories":categories
     }
     await create_faculty(faculty_data)
     return RedirectResponse("/faculty/",status_code=303)
