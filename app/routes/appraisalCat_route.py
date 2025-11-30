@@ -2,12 +2,12 @@ from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from app.services.appraisalCat_service import (
+from services.appraisalCat_service import (
     add_criteria, get_all_criteria, update_criteria, deactivate_criteria
 )
 
 router = APIRouter()
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory="templates")
 
 @router.get("/", response_class=HTMLResponse)
 async def criteria_page(request: Request):

@@ -3,12 +3,12 @@ from fastapi.responses import HTMLResponse , RedirectResponse
 from fastapi.templating import Jinja2Templates
 from typing import List
 
-from app.config.database import faculty_collection
-from app.schema.faculty_schema import FacultyCreate
-from app.services.faculty_service import (create_faculty,get_all_faculty,get_faculty,update_faculty,delete_faculty)
+from config.database import faculty_collection
+from schema.faculty_schema import FacultyCreate
+from services.faculty_service import (create_faculty,get_all_faculty,get_faculty,update_faculty,delete_faculty)
 
 router = APIRouter()
-templates = Jinja2Templates("app/templates")
+templates = Jinja2Templates(directory="templates")
 
 @router.get('/',response_class=HTMLResponse)
 async def faculty_page(request: Request):

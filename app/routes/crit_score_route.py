@@ -2,17 +2,17 @@ from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from app.services.faculty_crit_score_service import (
+from services.faculty_crit_score_service import (
     get_faculty_score,
     calculate_total_score,
     update_faculty_score,
     initialize_faculty_scores
 )
-from app.services.faculty_service import get_all_faculty
-from app.services.appraisalCat_service import get_all_criteria
+from services.faculty_service import get_all_faculty
+from services.appraisalCat_service import get_all_criteria
 
 router = APIRouter()
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory="templates")
 
 @router.get("/", response_class=HTMLResponse)
 async def scores_page(request: Request):

@@ -1,4 +1,4 @@
-from app.config.database import criteria_collection
+from config.database import criteria_collection
 from bson import ObjectId
 
 def criteria_helper(c):

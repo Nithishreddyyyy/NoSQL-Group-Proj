@@ -1,4 +1,4 @@
-from app.config.database import faculty_collection, criteria_collection
+from config.database import faculty_collection, criteria_collection
 from bson import ObjectId
 
 def faculty_helper(f):

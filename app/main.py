@@ -1,15 +1,16 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import uvicorn
 
-from app.routes.faculty_route import router as faculty_router
-from app.routes.appraisalCat_route import router as criteria_router
-from app.routes.crit_score_route import router as score_router
+from routes.faculty_route import router as faculty_router
+from routes.appraisalCat_route import router as criteria_router
+from routes.crit_score_route import router as score_router
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 async def index(request : Request):
@@ -18,3 +19,6 @@ async def index(request : Request):
 app.include_router(faculty_router, prefix="/faculty")
 app.include_router(criteria_router, prefix="/criteria")
 app.include_router(score_router, prefix = "/scores")
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", port=8000, reload=True)
