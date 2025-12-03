@@ -96,8 +96,26 @@
             background-color: #0056b3;
         }
     </style>
+
+    
 </head>
 <body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    
+    <!-- Clickable title linking to home "/" -->
+    <a href="/" class="nav-title">Faculty Appraisal System</a>
+
+    <ul class="nav-links">
+      <li><a href="/faculty">Faculty Management</a></li>
+      <li><a href="/criteria">Criteria Management</a></li>
+      <li><a href="/scores">Score Calculation</a></li>
+    </ul>
+  </div>
+</nav>
+
     <h1>Faculty Appraisal Scores</h1>
     <div class="box">
         <table>
@@ -155,7 +173,6 @@
             </tbody>
         </table>
     </div>
-    <a href="/">Back to Home</a>
 
     <script>
         function addCriteria(event, facultyId) {
