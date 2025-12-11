@@ -30,3 +30,13 @@ async def deactivate_criteria(id: str):
     )
     return True
 
+async def activate_criteria(id: str):
+    await criteria_collection.update_one(
+        {"_id": ObjectId(id)}, {"$set": {"is_active": True}}
+    )
+    return True
+
+async def delete_criteria(id: str):
+    await criteria_collection.delete_one({"_id": ObjectId(id)})
+    return True
+
