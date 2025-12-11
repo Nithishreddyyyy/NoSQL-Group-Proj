@@ -60,7 +60,10 @@
         <td>
           {% if c.is_active %}
           <a href="/criteria/deactivate/{{ c.id }}" class="btn-secondary">Deactivate</a>
+          {% else %}
+          <a href="/criteria/activate/{{ c.id }}" class="btn-secondary">Activate</a>
           {% endif %}
+          <a href="/criteria/delete/{{ c.id }}" class="btn-secondary">Delete</a>
         </td>
       </tr>
       {% endfor %}

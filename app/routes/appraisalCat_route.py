@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from app.services.appraisalCat_service import (
-    add_criteria, get_all_criteria, update_criteria, deactivate_criteria
+    add_criteria, get_all_criteria, update_criteria, deactivate_criteria, activate_criteria, delete_criteria
 )
 
 router = APIRouter()
@@ -26,4 +26,14 @@ async def create_criteria(
 @router.get("/deactivate/{id}")
 async def deactivate(id: str):
     await deactivate_criteria(id)
+    return RedirectResponse("/criteria/", status_code=303)
+
+@router.get("/activate/{id}")
+async def activate(id: str):
+    await activate_criteria(id)
+    return RedirectResponse("/criteria/", status_code=303)
+
+@router.get("/delete/{id}")
+async def delete(id: str):
+    await delete_criteria(id)
     return RedirectResponse("/criteria/", status_code=303)
