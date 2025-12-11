@@ -21,8 +21,8 @@ h1 {
     padding: 20px;
     margin: 20px auto;
     border-radius: 10px;
-    width: 80%;          /* reduced */
-    max-width: 700px;    /* reduced */
+    width: 90%;          /* increased */
+    max-width: 1200px;    /* increased */
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
@@ -89,15 +89,20 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 12px;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 th {
     background: #e6f4ff;
-    padding: 10px;
+    padding: 12px;
     border-bottom: 2px solid #d1d5db;
     text-align: left;
     font-weight: 600;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
 }
 
 /* td {
@@ -107,6 +112,96 @@ th {
 
 tr:hover td {
     background: #f7f8ff;
+}
+
+/* Criteria styles */
+.criteria-container {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: #fafafa;
+}
+
+.criteria-item {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.criteria-count {
+    background-color: #007bff;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 50%;
+    min-width: 28px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.criteria-item button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.criteria-item button:hover {
+    background-color: #c82333;
+}
+
+.add-criteria-section {
+    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.add-criteria-section select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.add-criteria-section button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-criteria-section button:hover {
+    background-color: #218838;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
 /* List Items */
@@ -145,7 +240,6 @@ tr:hover td {
     text-align: center;
     padding: 60px 20px;
 }
-
 /* Cards Grid */
 .landing-cards {
     display: grid;
