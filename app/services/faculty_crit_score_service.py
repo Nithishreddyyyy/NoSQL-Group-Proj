@@ -35,20 +35,14 @@ async def calculate_total_score(faculty_id: str):
         return 0
 
     criterion_names = score_doc.get("criterion_name", [])
-    base_score = score_doc.get("score", 0)
-    total_weighted_score = 0
-    total_weight = 0
+    total_score = 0
 
-    # Get weights for each selected criterion and calculate weighted score
-    async for criterion in criteria_collection.find({"name": {"$in": criterion_names}, "is_active": True}):
-        weight = criterion.get("weight", 0)
-        total_weight += weight
-        total_weighted_score += base_score * weight
+    for criterion_name in criterion_names:
+        criterion = await criteria_collection.find_one({"name": criterion_name, "is_active": True})
+        if criterion:
+            total_score += criterion.get("weight", 0)
 
-    # Return normalized weighted score
-    if total_weight > 0:
-        return total_weighted_score / total_weight
-    return 0
+    return total_score
 
 async def initialize_faculty_scores():
     """Initialize scores for all faculty with empty criteria list"""
@@ -69,18 +63,8 @@ async def initialize_faculty_scores():
 
 async def update_faculty_score(faculty_id: str, criterion_name: list):
     """Update the selected criteria for a faculty and auto-calculate score"""
-    # Count occurrences of each criterion
-    total_weight = 0
-    for criterion_name_item in criterion_name:
-        criterion = await criteria_collection.find_one({"name": criterion_name_item, "is_active": True})
-        if criterion:
-            total_weight += criterion.get("weight", 0)
-    
-    # Set score based on number of criteria selected (or use total weight)
-    score = len(criterion_name) if criterion_name else 0
-    
     await scores_collection.update_one(
         {"faculty_id": faculty_id},
-        {"$set": {"criterion_name": criterion_name, "score": score}}
+        {"$set": {"criterion_name": criterion_name}}
     )
     return True
